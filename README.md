@@ -27,3 +27,7 @@ npm start
 ```
 
 Scan the QR Code on the Expo Go app. You may not click on the retry icon if there is an issue.
+
+## Useful Links
+
+[Fonts](https://docs.expo.dev/develop/user-interface/fonts/)
