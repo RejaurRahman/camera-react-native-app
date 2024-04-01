@@ -31,3 +31,4 @@ Scan the QR Code on the Expo Go app. You may not click on the retry icon if ther
 ## Useful Links
 
 [Fonts](https://docs.expo.dev/develop/user-interface/fonts/)
+[Splash Screen](https://docs.expo.dev/versions/latest/sdk/splash-screen/)
