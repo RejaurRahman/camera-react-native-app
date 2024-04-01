@@ -23,7 +23,7 @@ When choosing the template choose -> Blank (TypeScript)
 To start the project run:
 
 ```
-npm start
+npm start OR npm start -- --clear
 ```
 
 Scan the QR Code on the Expo Go app. You may not click on the retry icon if there is an issue.
@@ -32,3 +32,4 @@ Scan the QR Code on the Expo Go app. You may not click on the retry icon if ther
 
 [Fonts](https://docs.expo.dev/develop/user-interface/fonts/)
 [Splash Screen](https://docs.expo.dev/versions/latest/sdk/splash-screen/)
+[Expo Router Manual Installation](https://docs.expo.dev/router/installation/#manual-installation)
