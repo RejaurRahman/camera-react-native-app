@@ -28,7 +28,7 @@ export default function RootLayout() {
   return (
     <Stack 
       screenOptions={{
-        headerStyle: { backgroundColor: "red" },
+        headerStyle: { backgroundColor: "#9f000f" },
         title: "Camera" 
       }}
     >
