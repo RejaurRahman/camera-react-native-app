@@ -1,9 +1,9 @@
-import { StatusBar } from "expo-status-bar";
+import { StatusBar } from "expo-status-bar"
 import {
   StyleSheet, 
   Text, 
   View 
-} from "react-native";
+} from "react-native"
 
 export default function HomeScreen() {
   return (
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center"
   }
-});
+})

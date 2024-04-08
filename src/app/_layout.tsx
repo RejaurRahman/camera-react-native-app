@@ -1,28 +1,39 @@
-import { Stack } from "expo-router";
-import React, { useEffect } from "react";
+import { Stack } from "expo-router"
+import React, { useEffect, useState } from "react"
 
 import {  
   Inter_900Black, 
   useFonts
-} from "@expo-google-fonts/inter";
+} from "@expo-google-fonts/inter"
 
-import * as SplashScreen from "expo-splash-screen";
-
-SplashScreen.preventAutoHideAsync()
+import AnimatedSplashScreen from "@/components/AnimatedSplashScreen"
 
 export default function RootLayout() {
+  const [appReady, setAppReady] = useState(false)
+  const [splashAnimationFinished, setSplashAnimationFinished] = useState(false)
+
   const [fontsLoaded, fontError] = useFonts({
     Inter: Inter_900Black
   })
 
   useEffect(() => {
     if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
+      setAppReady(true)
     }
   }, [fontsLoaded, fontError])
 
-  if (!fontsLoaded && !fontError) {
-    return null
+  const showAnimatedSplash = !appReady || !splashAnimationFinished
+
+  if (showAnimatedSplash) {
+    return (
+      <AnimatedSplashScreen
+        onAnimationFinish={(isCancelled) => {
+          if (!isCancelled) {
+            setSplashAnimationFinished(true)
+          }
+        }}
+      />
+    )
   }
 
   return (

@@ -1,9 +1,12 @@
-import { View } from "react-native";
-import LottieView from "lottie-react-native";
-import { useRef } from "react";
-import { Stack } from "expo-router";
+import { View } from "react-native"
+import LottieView from "lottie-react-native"
+import { useRef } from "react"
 
-export default function Animation() {
+export default function AnimatedSplashScreen({
+  onAnimationFinish = (isCancelled) => {},
+}: {
+  onAnimationFinish?: (isCancelled: boolean) => void;
+}) {
   const animation = useRef<LottieView>(null)
 
   return (
@@ -15,9 +18,10 @@ export default function Animation() {
         justifyContent: "center"
       }}
     >
-      <Stack.Screen options={{ headerShown: false }} />
       <LottieView 
         autoPlay
+        loop={false}
+        onAnimationFinish={onAnimationFinish}
         ref={animation}
         source={require("@assets/lottie/camera.json")}
         style={{
