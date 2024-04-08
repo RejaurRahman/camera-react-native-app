@@ -1,5 +1,9 @@
 import { Stack } from "expo-router"
-import React, { useEffect, useState } from "react"
+import React, { 
+  useEffect,
+  useState
+} from "react"
+import Animated, { FadeIn } from "react-native-reanimated"
 
 import {  
   Inter_900Black, 
@@ -37,16 +41,21 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack 
-      screenOptions={{
-        headerStyle: { backgroundColor: "#9f000f" },
-        title: "Camera" 
-      }}
+    <Animated.View
+      entering={FadeIn}
+      style={{ flex: 1 }}
     >
-      <Stack.Screen 
-        name="index" 
-        options={{ title: "Camera" }} 
-      />
-    </Stack>
+      <Stack
+        screenOptions={{
+          headerStyle: { backgroundColor: "#9f000f" },
+          title: "Camera"
+        }}
+      >
+        <Stack.Screen
+          name="index"
+          options={{ title: "Camera" }}
+        />
+      </Stack>
+    </Animated.View>
   )
 }
