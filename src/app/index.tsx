@@ -20,7 +20,8 @@ import {
   PhotoFile,
   TakePhotoOptions,
   useCameraDevice,
-  useCameraPermission
+  useCameraPermission,
+  useMicrophonePermission
 } from "react-native-vision-camera"
 import { useFocusEffect } from "expo-router"
 
@@ -32,6 +33,10 @@ export default function HomeScreen() {
   const [isRecording, setIsRecording] = useState(false)
 
   const { hasPermission, requestPermission } = useCameraPermission()
+  const {
+    hasPermission: microphonePermission,
+    requestPermission: requestMicrophonePermission,
+  } = useMicrophonePermission()
 
   const camera = useRef<Camera>(null)
 
@@ -55,7 +60,11 @@ export default function HomeScreen() {
     if (!hasPermission) {
       requestPermission()
     }
-  }, [hasPermission])
+
+    if (!microphonePermission) {
+      requestMicrophonePermission();
+    }
+  }, [hasPermission, microphonePermission])
 
   const onTakePicturePressed = async () => {
     if (isRecording) {
@@ -80,7 +89,7 @@ export default function HomeScreen() {
     const data = await result.blob()
   }
 
-  if (!hasPermission) {
+  if (!hasPermission || !microphonePermission) {
     return <ActivityIndicator />
   }
 
@@ -95,11 +104,13 @@ export default function HomeScreen() {
       />
 
       <Camera
+        audio
         device={device}
         isActive={isActive && !photo}
-        photo={true}
+        photo
         ref={camera}
         style={StyleSheet.absoluteFill}
+        video
       />
 
       {photo ? (
