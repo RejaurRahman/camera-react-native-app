@@ -7,6 +7,7 @@ import React, {
 } from "react"
 import {
   ActivityIndicator,
+  Button,
   Image,
   Pressable,
   StyleSheet,
@@ -70,6 +71,15 @@ export default function HomeScreen() {
     setPhoto(photo)
   }
 
+  const uploadPhoto = async () => {
+    if (!photo) {
+      return
+    }
+
+    const result = await fetch(`file://${photo.path}`)
+    const data = await result.blob()
+  }
+
   if (!hasPermission) {
     return <ActivityIndicator />
   }
@@ -109,6 +119,21 @@ export default function HomeScreen() {
               top: 50
             }}
           />
+          <View
+            style={{
+              backgroundColor: "rgba(0, 0, 0, 0.40)",
+              bottom: 0,
+              left: 0,
+              paddingBottom: 50,
+              position: "absolute",
+              right: 0
+            }}
+          >
+            <Button
+              onPress={uploadPhoto}
+              title="Upload"
+            />
+          </View>
         </>
       ) : (
         <>
