@@ -3,6 +3,7 @@
 A feature-rich Camera App that harnesses the power of the React Native Vision Camera library to capture photos, record videos and even scan QR codes seamlessly.
 
 Project Features:
+- Animated splash screen
 - Implementing Photo Capture Functionality
 - Photo Preview and Customization Options
 - Storing and Displaying Captured Photos
@@ -30,7 +31,8 @@ Scan the QR Code on the Expo Go app. You may not click on the retry icon if ther
 
 ## Useful Links
 
-[Fonts](https://docs.expo.dev/develop/user-interface/fonts/)
-[Splash Screen](https://docs.expo.dev/versions/latest/sdk/splash-screen/)
 [Expo Router Manual Installation](https://docs.expo.dev/router/installation/#manual-installation)
+[Fonts](https://docs.expo.dev/develop/user-interface/fonts/)
 [Reanimated](https://docs.expo.dev/versions/latest/sdk/reanimated/)
+[Splash Screen](https://docs.expo.dev/versions/latest/sdk/splash-screen/)
+[Vision Camera](https://react-native-vision-camera.com/docs/guides)
