@@ -1,7 +1,14 @@
 import { Stack } from "expo-router"
-import React, { useEffect } from "react"
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react"
 import {
   ActivityIndicator,
+  Image,
+  Pressable,
   StyleSheet,
   Text,
   View
@@ -9,22 +16,59 @@ import {
 
 import {
   Camera,
+  PhotoFile,
+  TakePhotoOptions,
   useCameraDevice,
   useCameraPermission
 } from "react-native-vision-camera"
+import { useFocusEffect } from "expo-router"
+
+import { FontAwesome5 } from "@expo/vector-icons"
 
 export default function HomeScreen() {
+  const [isActive, setIsActive] = useState(false)
+  const [flash, setFlash] = useState<TakePhotoOptions["flash"]>("off")
+  const [isRecording, setIsRecording] = useState(false)
+
   const { hasPermission, requestPermission } = useCameraPermission()
+
+  const camera = useRef<Camera>(null)
+
+  const [photo, setPhoto] = useState<PhotoFile>()
 
   const device = useCameraDevice("back", {
     physicalDevices: ["ultra-wide-angle-camera"]
   })
 
+  useFocusEffect(
+    useCallback(() => {
+      setIsActive(true)
+
+      return () => {
+        setIsActive(false)
+      }
+    }, [])
+  )
+
   useEffect(() => {
     if (!hasPermission) {
-      requestPermission();
+      requestPermission()
     }
   }, [hasPermission])
+
+  const onTakePicturePressed = async () => {
+    if (isRecording) {
+      camera.current?.stopRecording()
+
+      return
+    }
+
+    const photo = await camera.current?.takePhoto({
+      flash
+    })
+
+    setPhoto(photo)
+  }
 
   if (!hasPermission) {
     return <ActivityIndicator />
@@ -39,11 +83,47 @@ export default function HomeScreen() {
       <Stack.Screen
         options={{ headerShown: false }}
       />
-      <Camera
-        device={device}
-        isActive={true}
-        style={StyleSheet.absoluteFill}
-      />
+
+      {photo ? (
+        <>
+          <Image 
+            source={{ uri: photo.path }} 
+            style={StyleSheet.absoluteFill} 
+          />
+          <FontAwesome5
+            color="#fff"
+            name="arrow-left"
+            onPress={() => setPhoto(undefined)}
+            size={25}
+            style={{ 
+              left: 30, 
+              position: "absolute", 
+              top: 50
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Camera
+            device={device}
+            isActive={true}
+            photo={true}
+            ref={camera}
+            style={StyleSheet.absoluteFill}
+          />
+          <Pressable
+            onPress={onTakePicturePressed}
+            style={{
+              alignSelf: "center",
+              backgroundColor: "#fff",
+              borderRadius: 75,
+              bottom: 50,
+              height: 75,
+              position: "absolute"
+            }}
+          />
+        </>
+      )}
     </View>
   )
 }
