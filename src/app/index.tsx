@@ -23,7 +23,7 @@ import {
 } from "react-native-vision-camera"
 import { useFocusEffect } from "expo-router"
 
-import { FontAwesome5 } from "@expo/vector-icons"
+import { FontAwesome5, Ionicons } from "@expo/vector-icons"
 
 export default function HomeScreen() {
   const [isActive, setIsActive] = useState(false)
@@ -84,6 +84,14 @@ export default function HomeScreen() {
         options={{ headerShown: false }}
       />
 
+      <Camera
+        device={device}
+        isActive={isActive && !photo}
+        photo={true}
+        ref={camera}
+        style={StyleSheet.absoluteFill}
+      />
+
       {photo ? (
         <>
           <Image 
@@ -104,13 +112,27 @@ export default function HomeScreen() {
         </>
       ) : (
         <>
-          <Camera
-            device={device}
-            isActive={true}
-            photo={true}
-            ref={camera}
-            style={StyleSheet.absoluteFill}
-          />
+          <View
+            style={{
+              backgroundColor: "rgba(0, 0, 0, 0.40)",
+              borderRadius: 5,
+              gap: 30,
+              padding: 10,
+              position: "absolute",
+              right: 10,
+              top: 50
+            }}
+          >
+            <Ionicons
+              color="#fff"
+              size={24}
+              name={flash === "off" ? "flash-off" : "flash"}
+              onPress={() =>
+                setFlash((currentValue) => (currentValue === "off" ? "on" : "off"))
+              }
+            />
+          </View>
+
           <Pressable
             onPress={onTakePicturePressed}
             style={{
