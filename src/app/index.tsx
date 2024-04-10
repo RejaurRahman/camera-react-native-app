@@ -21,6 +21,7 @@ import {
   TakePhotoOptions,
   useCameraDevice,
   useCameraPermission,
+  useCodeScanner,
   useMicrophonePermission,
   VideoFile
 } from "react-native-vision-camera"
@@ -42,12 +43,21 @@ export default function HomeScreen() {
   } = useMicrophonePermission()
 
   const camera = useRef<Camera>(null)
+  const [mode, setMode] = useState("camera")
 
   const [photo, setPhoto] = useState<PhotoFile>()
   const [video, setVideo] = useState<VideoFile>()
 
   const device = useCameraDevice("back", {
     physicalDevices: ["ultra-wide-angle-camera"]
+  })
+
+  const codeScanner = useCodeScanner({
+    codeTypes: ["qr", "ean-13"],
+
+    onCodeScanned: (codes) => {
+      console.log(`Scanned ${codes.length} codes!`)
+    }
   })
 
   useFocusEffect(
@@ -129,15 +139,24 @@ export default function HomeScreen() {
         options={{ headerShown: false }}
       />
 
-      <Camera
-        audio
-        device={device}
-        isActive={isActive && !photo && !video}
-        photo
-        ref={camera}
-        style={StyleSheet.absoluteFill}
-        video
-      />
+      {mode === "qr" ? (
+        <Camera
+          codeScanner={codeScanner}
+          device={device}
+          isActive={mode === "qr" && isActive && !photo && !video}
+          style={StyleSheet.absoluteFill}
+        />
+      ) : (
+        <Camera
+          audio
+          device={device}
+          isActive={isActive && !photo && !video}
+          photo
+          ref={camera}
+          style={StyleSheet.absoluteFill}
+          video
+        />
+      )}
 
       {video && (
         <Video
@@ -205,6 +224,12 @@ export default function HomeScreen() {
               onPress={() =>
                 setFlash((currentValue) => (currentValue === "off" ? "on" : "off"))
               }
+            />
+            <Ionicons
+              color="#fff"
+              name={mode === "camera" ? "qr-code-sharp" : "camera"}
+              onPress={() => setMode(mode === "qr" ? "camera" : "qr")}
+              size={30}
             />
           </View>
 
