@@ -21,9 +21,12 @@ import {
   TakePhotoOptions,
   useCameraDevice,
   useCameraPermission,
-  useMicrophonePermission
+  useMicrophonePermission,
+  VideoFile
 } from "react-native-vision-camera"
 import { useFocusEffect } from "expo-router"
+
+import { Video } from "expo-av"
 
 import { FontAwesome5, Ionicons } from "@expo/vector-icons"
 
@@ -41,6 +44,7 @@ export default function HomeScreen() {
   const camera = useRef<Camera>(null)
 
   const [photo, setPhoto] = useState<PhotoFile>()
+  const [video, setVideo] = useState<VideoFile>()
 
   const device = useCameraDevice("back", {
     physicalDevices: ["ultra-wide-angle-camera"]
@@ -62,7 +66,7 @@ export default function HomeScreen() {
     }
 
     if (!microphonePermission) {
-      requestMicrophonePermission();
+      requestMicrophonePermission()
     }
   }, [hasPermission, microphonePermission])
 
@@ -78,6 +82,28 @@ export default function HomeScreen() {
     })
 
     setPhoto(photo)
+  }
+
+  const onStartRecording = async () => {
+    if (!camera.current) {
+      return
+    }
+
+    setIsRecording(true)
+
+    camera.current.startRecording({
+      flash: flash === "on" ? "on" : "off",
+
+      onRecordingFinished: (video) => {
+        setIsRecording(false)
+        setVideo(video)
+      },
+
+      onRecordingError: (error) => {
+        console.error(error)
+        setIsRecording(false)
+      }
+    })
   }
 
   const uploadPhoto = async () => {
@@ -106,14 +132,25 @@ export default function HomeScreen() {
       <Camera
         audio
         device={device}
-        isActive={isActive && !photo}
+        isActive={isActive && !photo && !video}
         photo
         ref={camera}
         style={StyleSheet.absoluteFill}
         video
       />
 
-      {photo ? (
+      {video && (
+        <Video
+          isLooping
+          source={{
+            uri: video.path
+          }}
+          style={StyleSheet.absoluteFill}
+          useNativeControls
+        />
+      )}
+
+      {photo && (
         <>
           <Image 
             source={{ uri: photo.path }} 
@@ -146,7 +183,9 @@ export default function HomeScreen() {
             />
           </View>
         </>
-      ) : (
+      )}
+
+      {!photo && !video && (
         <>
           <View
             style={{
@@ -170,10 +209,11 @@ export default function HomeScreen() {
           </View>
 
           <Pressable
+            onLongPress={onStartRecording}
             onPress={onTakePicturePressed}
             style={{
               alignSelf: "center",
-              backgroundColor: "#fff",
+              backgroundColor: isRecording ? "#c11b17" : "#fff",
               borderRadius: 75,
               bottom: 50,
               height: 75,
