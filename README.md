@@ -35,4 +35,5 @@ Scan the QR Code on the Expo Go app. You may not click on the retry icon if ther
 [Fonts](https://docs.expo.dev/develop/user-interface/fonts/)
 [Reanimated](https://docs.expo.dev/versions/latest/sdk/reanimated/)
 [Splash Screen](https://docs.expo.dev/versions/latest/sdk/splash-screen/)
+[Vexo Analytics](https://docs.vexo.co/)
 [Vision Camera](https://react-native-vision-camera.com/docs/guides)

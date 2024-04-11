@@ -12,6 +12,10 @@ import {
 
 import AnimatedSplashScreen from "@/components/AnimatedSplashScreen"
 
+import { vexo } from "vexo-analytics"
+
+vexo(process.env.EXPO_PUBLIC_VEXO_API_KEY || "")
+
 export default function RootLayout() {
   const [appReady, setAppReady] = useState(false)
   const [splashAnimationFinished, setSplashAnimationFinished] = useState(false)
