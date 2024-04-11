@@ -10,6 +10,7 @@ Project Features:
 - Adding Video Recording Features
 - Integrating QR Code Scanning
 - Customizing Camera UI and Controls
+- Integrate analytics using Vexo.co
 
 ## Expo Setup
 
