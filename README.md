@@ -25,13 +25,14 @@ When choosing the template choose -> Blank (TypeScript)
 To start the project run:
 
 ```
-npm start OR npm start -- --clear
+npm start OR npm start -- --clear OR npm start -- --reset-cache
 ```
 
 Scan the QR Code on the Expo Go app. You may not click on the retry icon if there is an issue.
 
 ## Useful Links
 
+[Expo AV](https://docs.expo.dev/versions/latest/sdk/av/)
 [Expo Router Manual Installation](https://docs.expo.dev/router/installation/#manual-installation)
 [Fonts](https://docs.expo.dev/develop/user-interface/fonts/)
 [Reanimated](https://docs.expo.dev/versions/latest/sdk/reanimated/)
