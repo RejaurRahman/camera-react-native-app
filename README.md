@@ -66,6 +66,28 @@ Start local development server with:
 npx expo start --dev-client
 ```
 
+## New Deployment
+
+Once a new commit is released on Github.
+
+You need to run the following command in the terminal:
+
+```
+npx expo start --dev-client
+```
+
+Go on [https://expo.dev/](https://expo.dev/) select the project and then click on the build link card.
+
+Click on the install blue button. It will ask you scan the QR Code which you need to scan on Expo Go App on your phone.
+
+It will ask you install build artifact on your phone. You will need to download the file. Once downloaded it will ask you install your application on the phone.
+
+Enter the Metro link in the terminal manually:
+
+```
+exp+camera-react-native://expo-development-client/?url={LOCALHOST IP ADDRESS}
+```
+
 ## Useful Links
 
 [Expo AV](https://docs.expo.dev/versions/latest/sdk/av/)
