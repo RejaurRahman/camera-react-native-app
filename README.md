@@ -30,6 +30,42 @@ npm start OR npm start -- --clear OR npm start -- --reset-cache
 
 Scan the QR Code on the Expo Go app. You may not click on the retry icon if there is an issue.
 
+## EAS Setup
+
+[https://expo.dev/login](https://expo.dev/login)
+
+Add the credentials. Avoid clicking on the Login button.
+
+Install EAS Cli and run login command with credentials for EAS Expo Dev account:
+
+```
+npm install -g eas-cli
+npx eas login
+```
+
+Install development buold on an Android emulator with .apk:
+
+```
+npx eas build --profile development --platform android
+```
+
+It will then give you instructions:
+
+- Do you want EAS CLI to install expo-dev-client for you? - yes
+- Would you like to automatically create an EAS project for {@USER/PROJECT NAME}? - yes
+- What would you like your Android application id to be? - com.{USER}.{PROJECT NAME}
+- Generate a new Android Keystore? - yes
+
+After 5 - 10 minutes it will create an .apk file in the Expo.dev account.
+
+When the build completes and it will give you a download button which will allow you to download the .apk and install on your mobile.
+
+Start local development server with:
+
+```
+npx expo start --dev-client
+```
+
 ## Useful Links
 
 [Expo AV](https://docs.expo.dev/versions/latest/sdk/av/)

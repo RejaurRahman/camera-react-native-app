@@ -242,7 +242,8 @@ export default function HomeScreen() {
               borderRadius: 75,
               bottom: 50,
               height: 75,
-              position: "absolute"
+              position: "absolute",
+              width: 75
             }}
           />
         </>
