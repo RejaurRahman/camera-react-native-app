@@ -1,6 +1,6 @@
 import { View } from "react-native"
 import LottieView from "lottie-react-native"
-import { useRef } from "react"
+import { useState, useRef } from "react"
 import Animated, { ZoomOut } from "react-native-reanimated"
 
 const AnimatedLottieView = Animated.createAnimatedComponent(LottieView)
@@ -11,6 +11,12 @@ export default function AnimatedSplashScreen({
   onAnimationFinish?: (isCancelled: boolean) => void;
 }) {
   const animation = useRef<LottieView>(null)
+  const [animationFinished, setAnimationFinished] = useState(false)
+
+  const handleAnimationComplete = (isCancelled: boolean) => {
+    setAnimationFinished(true)
+    onAnimationFinish(isCancelled)
+  }
 
   return (
     <View
@@ -25,7 +31,7 @@ export default function AnimatedSplashScreen({
         autoPlay
         exiting={ZoomOut}
         loop={false}
-        onAnimationFinish={onAnimationFinish}
+        onAnimationFinish={handleAnimationComplete}
         ref={animation}
         source={require("@assets/lottie/camera.json")}
         style={{

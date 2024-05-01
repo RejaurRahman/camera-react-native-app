@@ -87,9 +87,7 @@ export default function HomeScreen() {
       return
     }
 
-    const photo = await camera.current?.takePhoto({
-      flash
-    })
+    const photo = await camera.current?.takePhoto()
 
     setPhoto(photo)
   }
@@ -148,13 +146,13 @@ export default function HomeScreen() {
         />
       ) : (
         <Camera
-          audio
+          audio={true}
           device={device}
-          isActive={isActive && !photo && !video}
-          photo
+          isActive={isActive && !photo && !video && mode === "camera"}
+          photo={true}
           ref={camera}
           style={StyleSheet.absoluteFill}
-          video
+          video={true}
         />
       )}
 
@@ -172,7 +170,7 @@ export default function HomeScreen() {
       {photo && (
         <>
           <Image 
-            source={{ uri: photo.path }} 
+            source={{ uri: photo.path }}
             style={StyleSheet.absoluteFill} 
           />
           <FontAwesome5
@@ -237,15 +235,28 @@ export default function HomeScreen() {
             onLongPress={onStartRecording}
             onPress={onTakePicturePressed}
             style={{
+              alignItems: "center",
               alignSelf: "center",
               backgroundColor: isRecording ? "#c11b17" : "#fff",
               borderRadius: 75,
               bottom: 50,
               height: 75,
+              justifyContent: "center",
               position: "absolute",
               width: 75
             }}
-          />
+          >
+            {isRecording && (
+              <View
+                style={{
+                  backgroundColor: "#c11b17",
+                  borderRadius: 12.5,
+                  height: 25,
+                  width: 25
+                }}
+              />
+            )}
+          </Pressable>
         </>
       )}
     </View>
